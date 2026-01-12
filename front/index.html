@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- ЗАЩИТА СТРАНИЦЫ -->
-    <script>
-        if (!localStorage.getItem("user")) {
-            window.location.href = "login.html";
-        }
-    </script>
+<script>
+    if (!localStorage.getItem("token")) {
+        window.location.href = "login.html";
+    }
+</script>
+
 </head>
 <body>
 
@@ -21,6 +22,17 @@
         Вы вошли как:<br>
         <strong id="userEmail"></strong>
     </p>
+    <script>
+fetch("http://127.0.0.1:5000/profile", {
+    headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token")
+    }
+})
+.then(res => res.json())
+.then(data => {
+    document.getElementById("userEmail").innerText = data.email;
+});
+</script>
 
     <button onclick="logout()">Выйти</button>
 </div>

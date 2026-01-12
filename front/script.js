@@ -1,33 +1,32 @@
 const API_URL = "http://127.0.0.1:5000";
 
-// Логин
+// ЛОГИН
 function login(event) {
-    event.preventDefault(); // чтобы страница не перезагружалась
+    event.preventDefault();
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    fetch("http://127.0.0.1:5000/login", {
+    fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
     })
     .then(res => res.json())
     .then(data => {
-        if (data.message === "Успешный вход") {
-            localStorage.setItem("user", email);
+        if (data.token) {
+            localStorage.setItem("token", data.token);
             window.location.href = "index.html";
         } else {
-            document.getElementById("message").innerText = data.message;
+            document.getElementById("message").innerText = "Ошибка входа";
         }
     });
 }
 
-
-// Регистрация
-function register() {
+// РЕГИСТРАЦИЯ
+function register(event) {
     event.preventDefault();
-    
+
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -38,7 +37,7 @@ function register() {
     })
     .then(res => res.json())
     .then(data => {
-        if (data.message === "Пользователь зарегистрирован") {
+        if (data.message === "Регистрация успешна") {
             window.location.href = "login.html";
         } else {
             document.getElementById("message").innerText = data.message;
@@ -46,8 +45,8 @@ function register() {
     });
 }
 
-// Выход
+// ВЫХОД
 function logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     window.location.href = "login.html";
 }
