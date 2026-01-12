@@ -12,7 +12,12 @@ function login() {
     })
     .then(res => res.json())
     .then(data => {
-        document.getElementById("message").innerText = data.message;
+        if (data.message === "Успешный вход") {
+            localStorage.setItem("user", email);
+            window.location.href = "index.html";
+        } else {
+            document.getElementById("message").innerText = data.message;
+        }
     });
 }
 
@@ -28,6 +33,16 @@ function register() {
     })
     .then(res => res.json())
     .then(data => {
-        document.getElementById("message").innerText = data.message;
+        if (data.message === "Пользователь зарегистрирован") {
+            window.location.href = "login.html";
+        } else {
+            document.getElementById("message").innerText = data.message;
+        }
     });
+}
+
+// Выход
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
 }

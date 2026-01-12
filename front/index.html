@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ЗАЩИТА СТРАНИЦЫ -->
+    <script>
+        if (!localStorage.getItem("user")) {
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+<body>
+
+<div class="auth-box">
+    <h2>Добро пожаловать 👋</h2>
+
+    <p class="welcome-text">
+        Вы вошли как:<br>
+        <strong id="userEmail"></strong>
+    </p>
+
+    <button onclick="logout()">Выйти</button>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+    document.getElementById("userEmail").innerText =
+        localStorage.getItem("user");
+</script>
+
+</body>
+</html>
